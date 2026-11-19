@@ -9,6 +9,10 @@ index.html              capa da wiki
 study-design/
   index.html            study design completo
   diagrama.png          o design em uma imagem
+acompanhamento/
+  index.html            status de cada frente e materiais apresentados
+reunioes/
+  index.html            discussões, decisões e próximos passos por reunião
 ```
 
 Cada página é um arquivo HTML autocontido, sem etapa de build. Para adicionar um documento, crie uma pasta com um `index.html` e um cartão na capa.

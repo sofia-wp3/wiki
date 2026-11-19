@@ -1,0 +1,305 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Acompanhamento WP3 SOFIA</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Source+Sans+3:ital,wght@0,400;0,600;0,700;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: painel de acompanhamento. Situação geral no topo, uma seção por frente com status, entregas e próximos passos. */
+:root{--bg:#f5f8f8;--surface:#fff;--tint:#e5f0ef;--ink:#17292d;--ink-2:#4a5f64;--ink-3:#6b7f84;--line:#d3dfe0;--accent:#0b6b63;--accent-ink:#fff;
+--warn-bg:#fbf1dc;--warn-line:#b7791f;--warn-ink:#6d4608;--good:#1d7a55;--bad:#a93d2e;
+--display:"Bricolage Grotesque","Avenir Next","Segoe UI",sans-serif;--body:"Source Sans 3","Helvetica Neue",Arial,sans-serif;--mono:"IBM Plex Mono",ui-monospace,Menlo,monospace}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0f1a1c;--surface:#162427;--tint:#1b3235;--ink:#e6efef;--ink-2:#aebfc1;--ink-3:#8a9ea1;--line:#2b4044;--accent:#4fc2b4;--accent-ink:#08201e;--warn-bg:#2e2412;--warn-line:#d9a441;--warn-ink:#f0d9a8;--good:#6cc9a0;--bad:#ee8f7f;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0f1a1c;--surface:#162427;--tint:#1b3235;--ink:#e6efef;--ink-2:#aebfc1;--ink-3:#8a9ea1;--line:#2b4044;--accent:#4fc2b4;--accent-ink:#08201e;--warn-bg:#2e2412;--warn-line:#d9a441;--warn-ink:#f0d9a8;--good:#6cc9a0;--bad:#ee8f7f;color-scheme:dark}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:400 1.0625rem/1.6 var(--body)}
+.wrap{max-width:1080px;margin:0 auto;padding-block:48px 72px;padding-left:max(24px,env(safe-area-inset-left,0px));padding-right:max(24px,env(safe-area-inset-right,0px));display:grid;gap:40px}
+@media (max-width:620px){.wrap{padding-block:24px 48px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}}
+h1,h2,h3{font-family:var(--display);margin:0;text-wrap:balance}h1{font-size:clamp(2rem,5vw,3rem);line-height:1.05;letter-spacing:-.02em}h2{font-size:1.45rem}h3{font-size:1.1rem;line-height:1.25}
+p{margin:0}a{color:var(--accent)}:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.eyebrow{font:500 .75rem var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--accent)}
+.crumb{font:500 .8rem var(--mono)}.crumb a{text-decoration:none}
+header{display:grid;gap:12px}.lead{font-size:1.1rem;max-width:66ch;color:var(--ink-2)}
+section{display:grid;gap:14px}
+.card{border:1px solid var(--line);border-radius:6px;background:var(--surface);padding:18px;display:grid;gap:12px;align-content:start}
+.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+@media (max-width:820px){.grid2{grid-template-columns:minmax(0,1fr)}}
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border:1px solid var(--line);border-radius:6px;background:var(--surface);overflow:hidden}
+.stats div{padding:14px 16px;border-right:1px solid var(--line);display:grid;gap:2px}.stats div:last-child{border-right:0}
+.stats b{font:700 1.6rem/1.1 var(--display);font-variant-numeric:tabular-nums}.stats span{font-size:.9rem;color:var(--ink-2);line-height:1.35}
+@media (max-width:820px){.stats{grid-template-columns:repeat(2,minmax(0,1fr))}.stats div:nth-child(2){border-right:0}.stats div:nth-child(-n+2){border-bottom:1px solid var(--line)}}
+.who{display:flex;flex-wrap:wrap;gap:8px 12px;align-items:baseline}
+.tag{font:500 .72rem var(--mono);letter-spacing:.05em;text-transform:uppercase;padding:2px 8px;border-radius:3px;border:1px solid var(--line);color:var(--ink-3)}
+.tag.ok{color:var(--good);border-color:currentColor}.tag.wait{color:var(--warn-line);border-color:currentColor}.tag.stop{color:var(--bad);border-color:currentColor}
+ul{margin:0;padding-left:1.2em;display:grid;gap:6px}li{line-height:1.5}
+.k{font:500 .74rem var(--mono);letter-spacing:.05em;text-transform:uppercase;color:var(--ink-3)}
+.tw{border:1px solid var(--line);border-radius:6px;background:var(--surface);overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:.95rem}th,td{padding:9px 12px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+th{font:500 .74rem var(--mono);letter-spacing:.05em;text-transform:uppercase;color:var(--ink-3);background:var(--tint)}tr:last-child td{border-bottom:0}
+td.n{font-variant-numeric:tabular-nums;text-align:right;white-space:nowrap}
+.warn{border:1px solid var(--warn-line);background:var(--warn-bg);color:var(--warn-ink);border-radius:6px;padding:14px 16px;font-size:.97rem}
+.note{font-size:.92rem;color:var(--ink-3);max-width:75ch}
+code{font:.88em var(--mono);background:var(--tint);padding:1px 4px;border-radius:3px;overflow-wrap:anywhere}
+nav.toc{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:.95rem}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <span class="crumb"><a href="../">← Wiki do WP3</a></span>
+  <span class="eyebrow">Acompanhamento · atualizado em 19/11/2026</span>
+  <h1>Onde cada frente está</h1>
+  <p class="lead">Situação de cada frente do WP3 com base nas apresentações da equipe e nas reuniões de 05/11 e 12/11. O histórico completo de discussões está em <a href="../reunioes/">Reuniões</a>.</p>
+  <nav class="toc" aria-label="Nesta página">
+    <a href="#geral">Situação geral</a><a href="#regulatorio">CEP e acessos</a><a href="#pec">PEC × GESTAR</a><a href="#abertas">Bases abertas</a><a href="#barcelona">Calculadora Barcelona</a><a href="#aghu">AGHU</a><a href="#gestar">Base GESTAR</a><a href="#novos">Novas linhas</a><a href="#materiais">Materiais</a>
+  </nav>
+</header>
+
+<section id="geral">
+  <h2>Situação geral</h2>
+  <div class="stats">
+    <div><b>95</b><span>variáveis da literatura mapeadas no GESTAR e no PEC</span></div>
+    <div><b>70</b><span>disponíveis nas duas fontes</span></div>
+    <div><b>62</b><span>arquivos de bases abertas auditados (2012–2023)</span></div>
+    <div><b>3</b><span>modelos da calculadora Barcelona replicados</span></div>
+  </div>
+  <div class="warn"><strong>Gargalo atual: aprovação ética.</strong> Em 12/11 a equipe concluiu que as simulações com Rio Largo chegaram ao limite. O avanço técnico no PEC fica pausado até a aprovação do CEP. Enquanto isso, o trabalho segue em bases abertas, na validação da calculadora e em um projeto simplificado de absenteísmo no HU.</div>
+  <div class="tw"><table>
+    <thead><tr><th>Frente</th><th>Responsável</th><th>Status</th><th>Próximo passo</th></tr></thead>
+    <tbody>
+      <tr><td><a href="#pec">Mapeamento PEC × GESTAR</a></td><td>Tarcísio</td><td><span class="tag wait">Pausado: CEP</span></td><td>Rodar os mapeamentos nas 71 gestantes após aprovação</td></tr>
+      <tr><td><a href="#abertas">Bases abertas</a></td><td>Lara, com apoio de Tarcísio</td><td><span class="tag ok">Em andamento</span></td><td>Foco em SINASC e SIM; validar contra TABNET</td></tr>
+      <tr><td><a href="#barcelona">Calculadora Barcelona</a></td><td>Rebeca, com Rodrigo</td><td><span class="tag ok">Replicada</span></td><td>Testar com dados reais do GESTAR</td></tr>
+      <tr><td><a href="#aghu">Prontuários do HU (AGHU)</a></td><td>Yuk e Caio</td><td><span class="tag stop">Bloqueado</span></td><td>Chamado para o ambiente de treinamento; tarefas alternativas</td></tr>
+      <tr><td><a href="#gestar">Auditoria da base GESTAR</a></td><td>Rodrigo</td><td><span class="tag wait">Target em aberto</span></td><td>Definir target sem censura</td></tr>
+      <tr><td><a href="#regulatorio">CEP e cadastros</a></td><td>Marcelo, Caio e todos</td><td><span class="tag wait">Em trâmite</span></td><td>Submeter ao CEP; cadastros na Rede de Pesquisa e Plataforma Brasil</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<section id="regulatorio">
+  <h2>CEP, cadastros e acessos</h2>
+  <div class="grid2">
+    <div class="card">
+      <h3>O que foi alinhado em 12/11</h3>
+      <ul>
+        <li>O SOFIA precisa de <strong>autorização específica</strong> para usar a base do GESTAR. O formato guarda-chuva não basta.</li>
+        <li>Toda a equipe entra no projeto do CEP, para evitar conflitos de acesso.</li>
+        <li>A primeira submissão pede <strong>só dados estruturados</strong>. Textos livres (evoluções clínicas) entram depois, por emenda.</li>
+        <li>Dados que só existem no PEC exigem TCLE e autorização formal. Anonimização por <em>honest broker</em> ou hash.</li>
+        <li>Os TCLEs de gestantes e adolescentes do projeto de telessaúde já estão prontos e serão disparados após a aprovação (05/11).</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>Pendências</h3>
+      <ul>
+        <li><strong>Marcelo:</strong> submeter o projeto ao CEP e registrar o SOFIA e a equipe na Rede de Pesquisa do HU.</li>
+        <li><strong>Todos:</strong> cadastro na Plataforma Brasil, vinculado ao HU, e na <a href="https://sig.hubrasil.gov.br/redepesquisa/">Rede de Pesquisa do HU</a>. A Rede gera o identificador e libera o AGHU; a Plataforma Brasil é o trâmite nacional do CEP.</li>
+        <li><strong>Técnicas dos municípios:</strong> ligar para gestantes que já passaram pelo GESTAR para pedir autorização e coletar dados complementares, depois da aprovação.</li>
+      </ul>
+      <p class="note">Categorias de projeto no HU, segundo Caio: relatório público condensado (sem CEP), projeto sem dados sensíveis (trâmite interno rápido) e projeto com dados de pacientes (CEP completo).</p>
+    </div>
+  </div>
+</section>
+
+<section id="pec">
+  <h2>Mapeamento PEC × GESTAR (Rio Largo)</h2>
+  <p class="who"><span class="k">Tarcísio</span><span class="tag wait">Pausado até o CEP</span></p>
+  <div class="grid2">
+    <div class="card">
+      <h3>Literatura × GESTAR × PEC</h3>
+      <div class="tw"><table>
+        <thead><tr><th>Onde a variável está</th><th class="n">Variáveis</th></tr></thead>
+        <tbody>
+          <tr><td>GESTAR e PEC</td><td class="n">70</td></tr>
+          <tr><td>Só no PEC</td><td class="n">19</td></tr>
+          <tr><td>Só no GESTAR</td><td class="n">3</td></tr>
+          <tr><td>Em nenhum</td><td class="n">3</td></tr>
+        </tbody>
+      </table></div>
+      <p>Ausentes nas duas fontes: <strong>tempo de deslocamento</strong>, <strong>transporte confiável</strong> e <strong>sinais de alarme remotos</strong>. Só no GESTAR: UTI materna, UTI neonatal e acompanhamento por WhatsApp (NTS). Só no PEC: escolaridade, estado civil, renda, Bolsa Família, ocupação, moradia, zona urbana/rural, visitas do ACS, contrarreferência e pressão arterial, entre outras.</p>
+      <p class="note">Este mapeamento substitui a contagem anterior (81 de 95 presentes no GESTAR), que não considerava o PEC.</p>
+    </div>
+    <div class="card">
+      <h3>Dados do PEC para o GESTAR</h3>
+      <ul>
+        <li><strong>Extração direta:</strong> CPF, CNS, nome, nascimento, raça/cor, município (IBGE), UBS (CNES), DUM, IG em semanas, IG por USG, gestas e partos, profissional, evolução SOAP.</li>
+        <li><strong>Parcial ou derivado:</strong> exames laboratoriais (só por código SIGTAP), status da gestação, abortos, desfecho e nascimento, populações tradicionais, transferência, telessaúde, peso e altura.</li>
+        <li><strong>Sem equivalente:</strong> estratificação de risco (o PEC só tem <code>st_alto_risco</code>), pré-eclâmpsia estruturada, UTI, IG em dias.</li>
+        <li><strong>Chaves de linkage:</strong> CPF/CNS, CNES, código IBGE e DUM. No GESTAR, CPF e CNS são criptografados e precisam ser decifrados pela aplicação; os campos <code>*_hash</code> não servem para cruzar.</li>
+        <li><strong>Ponto de partida:</strong> <code>tb_fat_rel_op_gestante</code> já consolida início, DUM, IG, puerpério, VDRL e última consulta.</li>
+        <li>O PEC traz dados que o GESTAR não tem: equipe (INE), gravidez planejada, movimentação fetal, edema, altura uterina, BCF, vacinação e puerpério.</li>
+      </ul>
+    </div>
+  </div>
+  <div class="card">
+    <h3>Riscos e próximos passos</h3>
+    <ul>
+      <li>O recém-nascido tem prontuário próprio, ligado à mãe só pelo nome.</li>
+      <li>IG tem duas fontes (DUM e USG); alinhar qual o PEC usa em cada indicador.</li>
+      <li>Análise só estrutural, com o GESTAR em ambiente de desenvolvimento. Falta validar os domínios de <code>tb_tipo_atend</code>, <code>tb_raca_cor</code>, <code>tb_tipo_parto</code> e <code>tb_proced</code>.</li>
+      <li>Depois do CEP: rodar os 16 mapeamentos nas 71 gestantes de alto risco e confirmar as chaves marcadas como “a confirmar”.</li>
+      <li>Replicar a abordagem em Branquinha, que usa a mesma estrutura de PEC e GESTAR.</li>
+    </ul>
+  </div>
+</section>
+
+<section id="abertas">
+  <h2>Bases abertas</h2>
+  <p class="who"><span class="k">Lara, com apoio de Tarcísio</span><span class="tag ok">Em andamento</span></p>
+  <div class="grid2">
+    <div class="card">
+      <h3>Auditoria inicial (Alagoas, 2012–2023)</h3>
+      <div class="tw"><table>
+        <thead><tr><th>Base</th><th class="n">Arquivos</th><th class="n">Registros</th><th class="n">Colunas</th></tr></thead>
+        <tbody>
+          <tr><td>SINASC</td><td class="n">12</td><td class="n">599.379</td><td class="n">56–62</td></tr>
+          <tr><td>SIM</td><td class="n">12</td><td class="n">251.905</td><td class="n">73–88</td></tr>
+          <tr><td>CNES (EP, LT, ST)</td><td class="n">36</td><td class="n">528–4.145 por arquivo</td><td class="n">28–208</td></tr>
+          <tr><td>IBGE</td><td class="n">2</td><td class="n">306–2.244 por arquivo</td><td class="n">11</td></tr>
+        </tbody>
+      </table></div>
+      <p>134 verificações, todas OK: leitura, datas no ano do arquivo e código de município com prefixo 27. Scripts e relatórios num repositório privado no GitHub.</p>
+    </div>
+    <div class="card">
+      <h3>O que a auditoria ainda não garante</h3>
+      <ul>
+        <li>Totais não comparados com TABNET.</li>
+        <li>Sem análise de duplicidades.</li>
+        <li>Variação de colunas entre anos ainda não explicada (SINASC de 56 para 62).</li>
+        <li>Códigos não confrontados com os dicionários oficiais.</li>
+      </ul>
+      <h3>Direção definida em 12/11</h3>
+      <ul>
+        <li>Prioridade para bases individualizadas de gestantes e nascimentos: <strong>SINASC e SIM</strong>.</li>
+        <li>IBGE e CNES entram depois, como contexto.</li>
+        <li>Investigar bases já tratadas de outros estudos (por exemplo, PCDaS/Fiocruz).</li>
+      </ul>
+    </div>
+  </div>
+  <div class="card">
+    <h3>Catálogo levantado</h3>
+    <p>SINASC, SIM, CNES, SISAB/e-SUS APS (só indicadores, sem dado individual), SIH/SUS, SISVAN (individual anonimizado), Censo 2022, Portal de Dados Abertos do SUS, PCDaS/Fiocruz e, para contexto internacional, WHO GHO, World Bank HNP e UNICEF Data. A PNS foi descartada por ter só 2013 e 2019. SINASC, SIM e CNES juntos são a combinação usada em <a href="https://doi.org/10.1186/s12963-025-00420-x">Ramos et al., 2025</a>.</p>
+  </div>
+</section>
+
+<section id="barcelona">
+  <h2>Calculadora Barcelona e doenças gestacionais</h2>
+  <p class="who"><span class="k">Rebeca, com Rodrigo</span><span class="tag ok">Replicada</span></p>
+  <div class="grid2">
+    <div class="card">
+      <h3>Replicação da calculadora</h3>
+      <p>A calculadora estima o risco de pré-eclâmpsia precoce no 1º trimestre em três etapas: risco prévio (idade, etnia, paridade, HAC, PE prévia), conversão dos marcadores em MoM e risco posterior por razão de verossimilhança (PAM, IP das artérias uterinas, PAPP-A, PlGF).</p>
+      <ul>
+        <li>Três implementações em Python: regressão de Crovetto et al. (2015), modelo de Serra et al. (2020) e uma versão a partir do funcionamento do site oficial.</li>
+        <li>Num conjunto reduzido com as variáveis do site, os resultados <strong>coincidiram com a calculadora oficial</strong>.</li>
+        <li>Limite para Alagoas: o PEC tem PA e IMC, mas não Doppler nem PlGF.</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>Internações em Alagoas (SIH/SUS, 2015–2025)</h3>
+      <p>Internações lideradas por parto, complicações do trabalho de parto, aborto, pré-eclâmpsia e doenças maternas. Foco em <strong>pré-eclâmpsia</strong> e <strong>diabetes gestacional</strong>. Recorte combinado: últimos 5 anos.</p>
+      <h3>Em aberto</h3>
+      <ul>
+        <li>Validar a calculadora com dados reais do GESTAR e com grupos de Alagoas (quilombolas, ciganas, pretas e pardas), com vistas a artigo.</li>
+        <li>ML é necessário ou a calculadora basta? Rebeca defende ML para adaptar à população local; reunião com Rodrigo para alinhar.</li>
+        <li>Escopo: só pré-eclâmpsia ou todos os transtornos hipertensivos. <strong>Adiado para a próxima reunião.</strong></li>
+        <li>Trazer estudos recentes e novos parâmetros sobre pré-eclâmpsia.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section id="aghu">
+  <h2>Prontuários do HU (AGHU)</h2>
+  <p class="who"><span class="k">Yuk e Caio</span><span class="tag stop">Bloqueado</span></p>
+  <div class="card">
+    <ul>
+      <li>Yuk estruturou dados de textos clínicos num notebook (partos, abortos, cirurgia uterina, DUM, gestação gemelar) e quer unir com os dados cadastrais do AGHU (etnia, escolaridade, estado civil).</li>
+      <li>O AGHU passa por troca de domínio e manutenção de segurança. O ambiente de treinamento foi limpo e está inativo, sem previsão; o acesso por VPN ficou restrito. Não houve coleta nova na semana 6.</li>
+      <li>O acesso de pesquisa depende do cadastro na Rede de Pesquisa do HU.</li>
+      <li><strong>Caio:</strong> abrir chamado para o ambiente de treinamento e montar a tabela de campos necessários para a unidade neonatal validar.</li>
+      <li><strong>Rodrigo:</strong> definir tarefas alternativas para Yuk durante o bloqueio.</li>
+    </ul>
+  </div>
+</section>
+
+<section id="gestar">
+  <h2>Auditoria da base GESTAR</h2>
+  <p class="who"><span class="k">Rodrigo</span><span class="tag wait">Target em aberto</span></p>
+  <div class="grid2">
+    <div class="card">
+      <h3>Achados</h3>
+      <ul>
+        <li><strong>Dicionário incompleto:</strong> das 129 colunas do arquivo transversal, 28 estão descritas e 101 não.</li>
+        <li><strong>Target desbalanceado:</strong> <code>target_dropout_pre_natal_6_consultas</code> = 1 em 1.087 registros (97,66%); só 26 com target = 0.</li>
+        <li><strong>Censura:</strong> das 1.011 ativas com target = 1, 787 tinham a última consulta com IG ≤ 27 semanas. O pré-natal delas ainda não terminou.</li>
+        <li><strong>Vazamento:</strong> <code>total_consultas_realizadas</code> não pode ser preditor, porque gera o target.</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>Consistência entre tabelas</h3>
+      <div class="tw"><table>
+        <thead><tr><th>Problema</th><th class="n">Casos</th></tr></thead>
+        <tbody>
+          <tr><td><code>pregnancy_id</code> diverge entre pacientes e consultas</td><td class="n">20 pacientes</td></tr>
+          <tr><td>Ativas sem nenhuma consulta</td><td class="n">22</td></tr>
+          <tr><td>Pré-cadastros com o placeholder <code>G_SEM_REGISTRO</code></td><td class="n">61</td></tr>
+          <tr><td>Consultas com <code>pregnancy_id</code> fora da tabela de pacientes</td><td class="n">4 linhas</td></tr>
+        </tbody>
+      </table></div>
+      <p>Distribuição de consultas: 0 (22), 1 (692), 2 (212), 3 (97), 4 (38), 5 (26), 6 ou mais (26).</p>
+      <p class="note">Conclusão: não dá para afirmar que toda gestante com target = 1 abandonou o pré-natal. Os resultados do artigo seguem pausados.</p>
+    </div>
+  </div>
+</section>
+
+<section id="novos">
+  <h2>Novas linhas abertas em 12/11</h2>
+  <div class="grid2">
+    <div class="card">
+      <h3>Absenteísmo e clima</h3>
+      <p>Proposta de Marcelo: prever faltas a consultas cruzando o município de origem com dados meteorológicos (dias de chuva em Alagoas) e o histórico de faltas do HU. Usa só data, cidade e tipo de falta, sem identificação, e por isso pode ir pela via interna simplificada do HU. Caio lembrou que é preciso separar faltas da paciente de faltas operacionais do hospital.</p>
+      <p><span class="k">Responsável</span> Rodrigo submete o projeto simplificado.</p>
+    </div>
+    <div class="card">
+      <h3>Deslocamento e transporte no GESTAR</h3>
+      <p>Tempo de deslocamento e tipo de transporte são decisivos para não perder gestantes, e não existem em nenhuma base. Entram como <strong>campos opcionais</strong> no formulário de estratificação do GESTAR, para capturar as novas gestantes. Os dados retroativos virão por ligação após a aprovação do CEP.</p>
+      <p><span class="k">Responsável</span> Rodrigo.</p>
+    </div>
+    <div class="card">
+      <h3>Textos clínicos com LLM local</h3>
+      <p>Para quando a emenda de dados não estruturados vier: LLM local e expressões regulares para extrair e anonimizar texto. Marcelo sugeriu um servidor de IA dentro do HU.</p>
+    </div>
+    <div class="card">
+      <h3>Ferramentas da equipe</h3>
+      <p>Artigos migram do Prisma para o Overleaf. Rodrigo cria um repositório geral no GitHub para o grupo e coleta os usuários de cada membro.</p>
+    </div>
+  </div>
+</section>
+
+<section id="materiais">
+  <h2>Materiais apresentados</h2>
+  <p class="note">Os links abrem no Google Drive da equipe e exigem acesso à pasta do projeto.</p>
+  <div class="tw"><table>
+    <thead><tr><th>Data</th><th>Frente</th><th>Material</th></tr></thead>
+    <tbody>
+      <tr><td>12/11</td><td>PEC × GESTAR</td><td><a href="https://drive.google.com/file/d/1jV3iWgiku2UUPmRrkoG9N-2AZ_i40rCl/view">Dados do PEC para o GESTAR · Mapeamentos</a></td></tr>
+      <tr><td>12/11</td><td>PEC × GESTAR</td><td><a href="https://drive.google.com/file/d/1eXyRSzLGkjAjCAgM9xa38X8Q5T0xySr8/view">Variáveis da literatura × GESTAR × PEC Rio Largo</a> (<a href="https://drive.google.com/file/d/1B9FmMZ9x1VhSWaJX2DbeBvK-PV79yF4e/view">CSV</a>)</td></tr>
+      <tr><td>12/11</td><td>Bases abertas</td><td><a href="https://docs.google.com/document/d/1KfeXSasUkrNIJKah7ePFjmvIBsUmOaxtmCGjVg7JObQ/edit">Resultados da auditoria inicial</a></td></tr>
+      <tr><td>12/11</td><td>Doenças gestacionais</td><td><a href="https://drive.google.com/file/d/1Fg_qxeSKDSz70P3Xv_W-xShqnZrv_jdL/view">CIDs mais comuns em Alagoas</a> · <a href="https://drive.google.com/file/d/1RDPF3G5RD2OCYQCYOk5EPGDzpTaTv-bv/view">Calculadora Barcelona: implementação e referências</a></td></tr>
+      <tr><td>12/11</td><td>AGHU</td><td><a href="https://drive.google.com/file/d/1mPJNAwX63i8yqTiIONOGWs-TONLqD_bl/view">Relato da semana 6</a></td></tr>
+      <tr><td>11/11</td><td>Bases abertas</td><td><a href="https://docs.google.com/document/d/1Qp7iAqqqGbz7Z6LruHpBPTEMnTvkx0TY2SomG5kaqVw/edit">Coletânea de bases de dados</a></td></tr>
+      <tr><td>17/11</td><td>Base GESTAR</td><td><a href="https://docs.google.com/presentation/d/1wTbcXGO360r_AcpqVm9dZ5wH6WmsYvvxJc3EJIIETqg/edit">Data study: qualidade, limitações e riscos</a></td></tr>
+      <tr><td>05/11</td><td>Doenças gestacionais</td><td><a href="https://drive.google.com/file/d/1wtQarjnnekbIYc7K6oixclAp2MipoLJK/view">Calculadora Barcelona Fetal</a></td></tr>
+      <tr><td>—</td><td>Pastas</td><td><a href="https://drive.google.com/drive/folders/1oEZAASNR3Wb3EkPcOQf6QlSTeV8mk2od">Slides do Yuk</a> · <a href="https://drive.google.com/drive/folders/1RUUNoF4t5Kx3BV_xm4HnpVCZJ5bralwm">Slides da Rebeca</a> · <a href="https://drive.google.com/drive/folders/1InpvVm2Gg9h69haG-BW5NI1KCSXiZ-4m">Slides do Tarcísio</a> · <a href="https://drive.google.com/drive/folders/1Y0rSO7GTgN3pvNecoQzb0PNiK4wDBUGO">Slides da Lara</a></td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<p class="note">Fontes: notas das reuniões de 05/11 e 12/11 e materiais da pasta do projeto no Drive. Números agregados; nenhum dado individual de paciente está nesta página.</p>
+</div>
+</body>
+</html>

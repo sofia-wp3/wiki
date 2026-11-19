@@ -1,0 +1,223 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Reuniões WP3 SOFIA</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Source+Sans+3:ital,wght@0,400;0,600;0,700;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: linha do tempo das reuniões, da mais recente para a mais antiga; cada reunião tem resumo, discussões, decisões e próximos passos. */
+:root{--bg:#f5f8f8;--surface:#fff;--tint:#e5f0ef;--ink:#17292d;--ink-2:#4a5f64;--ink-3:#6b7f84;--line:#d3dfe0;--accent:#0b6b63;--accent-ink:#fff;
+--warn-bg:#fbf1dc;--warn-line:#b7791f;--warn-ink:#6d4608;--good:#1d7a55;--bad:#a93d2e;
+--display:"Bricolage Grotesque","Avenir Next","Segoe UI",sans-serif;--body:"Source Sans 3","Helvetica Neue",Arial,sans-serif;--mono:"IBM Plex Mono",ui-monospace,Menlo,monospace}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0f1a1c;--surface:#162427;--tint:#1b3235;--ink:#e6efef;--ink-2:#aebfc1;--ink-3:#8a9ea1;--line:#2b4044;--accent:#4fc2b4;--accent-ink:#08201e;--warn-bg:#2e2412;--warn-line:#d9a441;--warn-ink:#f0d9a8;--good:#6cc9a0;--bad:#ee8f7f;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0f1a1c;--surface:#162427;--tint:#1b3235;--ink:#e6efef;--ink-2:#aebfc1;--ink-3:#8a9ea1;--line:#2b4044;--accent:#4fc2b4;--accent-ink:#08201e;--warn-bg:#2e2412;--warn-line:#d9a441;--warn-ink:#f0d9a8;--good:#6cc9a0;--bad:#ee8f7f;color-scheme:dark}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:400 1.0625rem/1.6 var(--body)}
+.wrap{max-width:1080px;margin:0 auto;padding-block:48px 72px;padding-left:max(24px,env(safe-area-inset-left,0px));padding-right:max(24px,env(safe-area-inset-right,0px));display:grid;gap:40px}
+@media (max-width:620px){.wrap{padding-block:24px 48px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}}
+h1,h2,h3{font-family:var(--display);margin:0;text-wrap:balance}h1{font-size:clamp(2rem,5vw,3rem);line-height:1.05;letter-spacing:-.02em}h2{font-size:1.45rem}h3{font-size:1.1rem;line-height:1.25}
+p{margin:0}a{color:var(--accent)}:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.eyebrow{font:500 .75rem var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--accent)}
+.crumb{font:500 .8rem var(--mono)}.crumb a{text-decoration:none}
+header{display:grid;gap:12px}.lead{font-size:1.1rem;max-width:66ch;color:var(--ink-2)}
+section{display:grid;gap:14px}
+.card{border:1px solid var(--line);border-radius:6px;background:var(--surface);padding:18px;display:grid;gap:12px;align-content:start}
+.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+@media (max-width:820px){.grid2{grid-template-columns:minmax(0,1fr)}}
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border:1px solid var(--line);border-radius:6px;background:var(--surface);overflow:hidden}
+.stats div{padding:14px 16px;border-right:1px solid var(--line);display:grid;gap:2px}.stats div:last-child{border-right:0}
+.stats b{font:700 1.6rem/1.1 var(--display);font-variant-numeric:tabular-nums}.stats span{font-size:.9rem;color:var(--ink-2);line-height:1.35}
+@media (max-width:820px){.stats{grid-template-columns:repeat(2,minmax(0,1fr))}.stats div:nth-child(2){border-right:0}.stats div:nth-child(-n+2){border-bottom:1px solid var(--line)}}
+.who{display:flex;flex-wrap:wrap;gap:8px 12px;align-items:baseline}
+.tag{font:500 .72rem var(--mono);letter-spacing:.05em;text-transform:uppercase;padding:2px 8px;border-radius:3px;border:1px solid var(--line);color:var(--ink-3)}
+.tag.ok{color:var(--good);border-color:currentColor}.tag.wait{color:var(--warn-line);border-color:currentColor}.tag.stop{color:var(--bad);border-color:currentColor}
+ul{margin:0;padding-left:1.2em;display:grid;gap:6px}li{line-height:1.5}
+.k{font:500 .74rem var(--mono);letter-spacing:.05em;text-transform:uppercase;color:var(--ink-3)}
+.tw{border:1px solid var(--line);border-radius:6px;background:var(--surface);overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:.95rem}th,td{padding:9px 12px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+th{font:500 .74rem var(--mono);letter-spacing:.05em;text-transform:uppercase;color:var(--ink-3);background:var(--tint)}tr:last-child td{border-bottom:0}
+td.n{font-variant-numeric:tabular-nums;text-align:right;white-space:nowrap}
+.warn{border:1px solid var(--warn-line);background:var(--warn-bg);color:var(--warn-ink);border-radius:6px;padding:14px 16px;font-size:.97rem}
+.note{font-size:.92rem;color:var(--ink-3);max-width:75ch}
+code{font:.88em var(--mono);background:var(--tint);padding:1px 4px;border-radius:3px;overflow-wrap:anywhere}
+nav.toc{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:.95rem}
+
+.meet{border:1px solid var(--line);border-radius:6px;background:var(--surface);padding:20px;display:grid;gap:14px;scroll-margin-top:16px}
+.meet>header{display:flex;flex-wrap:wrap;gap:6px 14px;align-items:baseline}
+.date{font:700 1.35rem var(--display);font-variant-numeric:tabular-nums}
+.sum{color:var(--ink-2);max-width:72ch}
+dl{margin:0;display:grid;gap:10px}dt{font-weight:700}dd{margin:0;color:var(--ink-2)}
+.cols{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}@media (max-width:820px){.cols{grid-template-columns:minmax(0,1fr)}}
+details summary{cursor:pointer;font-weight:600;color:var(--accent)}details[open] summary{margin-bottom:10px}
+.dec li::marker{color:var(--good)}.open li::marker{color:var(--warn-line)}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <span class="crumb"><a href="../">← Wiki do WP3</a></span>
+  <span class="eyebrow">Reuniões · 30/09 a 12/11/2026</span>
+  <h1>O que a equipe discutiu e decidiu</h1>
+  <p class="lead">Reuniões semanais às quintas, online, com uma presencial por mês no HU. Cada pessoa leva um slide por semana. Resumo feito a partir das atas, das notas automáticas do Meet e das apresentações. As notas automáticas erram nomes e falantes; na dúvida, vale a gravação.</p>
+  <nav class="toc" aria-label="Reuniões">
+    <a href="#r1211">12/11</a><a href="#r0511">05/11</a><a href="#r2910">29/10</a><a href="#r2210">22/10</a><a href="#r1510">15/10</a><a href="#r0810">08/10</a><a href="#r3009">30/09</a><a href="#linha">Como as decisões evoluíram</a>
+  </nav>
+</header>
+
+<section id="linha">
+  <h2>Como as decisões evoluíram</h2>
+  <div class="tw"><table>
+    <thead><tr><th>Tema</th><th>Antes</th><th>Agora (12/11)</th></tr></thead>
+    <tbody>
+      <tr><td>Target do primeiro estudo</td><td>Evasão do pré-natal (&lt; 6 ou &lt; 8 consultas) com dados do GESTAR (08/10 e 15/10)</td><td>Em aberto. A evasão por contagem está contaminada por censura e só 26 gestantes ficam na classe sem evasão. Alternativas: desfechos de parto, risco dinâmico ou sobrevivência com censura.</td></tr>
+      <tr><td>Fontes de dados</td><td>GESTAR primeiro, AGHU depois, RNDS por último (15/10)</td><td>PEC pausado e AGHU bloqueado até o CEP. Bases abertas (SINASC e SIM) em paralelo.</td></tr>
+      <tr><td>Ética</td><td>Submeter ao CEP para o AGHU (30/09); TCLE exigido até para dado anonimizado (22/10)</td><td>Autorização específica para o GESTAR; primeira submissão só com dados estruturados; texto livre por emenda.</td></tr>
+      <tr><td>Doenças gestacionais</td><td>Pré-eclâmpsia como desfecho prioritário (08/10)</td><td>Calculadora Barcelona replicada; escopo (só PE ou todos os hipertensivos) adiado.</td></tr>
+      <tr><td>Variáveis da literatura</td><td>81 de 95 no GESTAR (planilha de features)</td><td>70 em GESTAR e PEC, 19 só no PEC, 3 só no GESTAR, 3 em nenhum.</td></tr>
+      <tr><td>Escrita</td><td>Overleaf, depois Prism por custo (22/10)</td><td>Volta ao Overleaf.</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<article class="meet" id="r1211">
+  <header><span class="date">12/11</span><span class="tag">Online</span><span class="tag">Semana 6</span></header>
+  <p class="sum">Mapeamento PEC × GESTAR, validação da calculadora Barcelona, estratégia ética e bases abertas. Conclusão central: as simulações com Rio Largo chegaram ao limite sem aprovação do CEP.</p>
+  <div class="cols">
+    <div><h3>Decidido</h3><ul class="dec">
+      <li>Campos opcionais de transporte e tempo de deslocamento no GESTAR, para captar já as novas gestantes.</li>
+      <li>Pausar o avanço técnico no PEC até o CEP; focar em bases abertas.</li>
+      <li>Primeira submissão ao CEP só com dados estruturados; não estruturados por emenda.</li>
+      <li>Bases abertas: priorizar SINASC e SIM (nível individual).</li>
+      <li>Projeto simplificado de absenteísmo no HU, com dados não sensíveis.</li>
+      <li>SIH: usar os últimos 5 anos.</li>
+      <li>Artigos no Overleaf, não mais no Prism.</li>
+    </ul></div>
+    <div><h3>Em aberto</h3><ul class="open">
+      <li>Escopo de pré-eclâmpsia: só PE ou todos os transtornos hipertensivos. Fica para a próxima reunião.</li>
+      <li>Calculadora Barcelona: ML é necessário ou o cálculo atual basta?</li>
+    </ul></div>
+  </div>
+  <details><summary>O que foi discutido</summary><dl>
+    <dt>Mapeamento PEC × GESTAR (Tarcísio)</dt><dd>Das 95 variáveis do projeto, 70 estão no GESTAR e no PEC, 19 só no PEC, 3 só no GESTAR e 3 em nenhum (tempo de deslocamento, transporte, sinais de alarme remotos). Apresentou os caminhos relacionais do PEC: cidadão, prontuário, atendimento, fatos do cidadão, território, exame requisitado e vínculo com equipe.</dd>
+    <dt>Deslocamento e transporte</dt><dd>Marcelo destacou que tempo e meio de transporte são cruciais para não perder gestantes. Rodrigo propôs campos opcionais no GESTAR para os casos novos e ligações das técnicas dos municípios para os retroativos, após o CEP.</dd>
+    <dt>CEP e ética (Caio)</dt><dd>Depois de conversar com o CEP, a conclusão é que o SOFIA precisa de autorização própria para a base do GESTAR, com toda a equipe vinculada. Dados só do PEC exigem TCLE e autorização formal, com anonimização por honest broker ou hash.</dd>
+    <dt>Estratégia enquanto o CEP tramita</dt><dd>Rodrigo propôs trabalhar com bases abertas e replicar a abordagem em Branquinha, que tem a mesma estrutura de PEC e GESTAR. Marcelo concordou.</dd>
+    <dt>AGHU e Rede de Pesquisa</dt><dd>O ambiente de treinamento do AGHU está inativo, sem previsão; a TI prioriza produção. O acesso de pesquisa depende do cadastro na Rede de Pesquisa do HU, que gera o identificador. A Plataforma Brasil é o trâmite nacional do CEP. Todos devem se cadastrar nas duas.</dd>
+    <dt>Dados não estruturados</dt><dd>Caio propôs deixar textos livres para uma emenda, por causa da dificuldade de justificar a anonimização. Rodrigo e Caio discutiram LLM local e expressões regulares; Marcelo sugeriu um servidor de IA dentro do HU.</dd>
+    <dt>Bases abertas (Lara)</dt><dd>Repositório privado com scripts que baixam SINASC, SIM, CNES e IBGE de Alagoas (2012–2023) e relatórios de auditoria automáticos. Detectou variações estruturais, como o SINASC indo de 56 para 62 variáveis. Rodrigo orientou priorizar bases individualizadas e usar IBGE e CNES depois, como contexto.</dd>
+    <dt>Absenteísmo e clima</dt><dd>Marcelo propôs prever faltas cruzando endereço de origem com clima (dias de chuva). Rodrigo sugeriu OpenWeather mais os registros de faltas do HU. Caio lembrou de separar faltas da paciente de faltas operacionais. Como usa só data, cidade e tipo de falta, pode seguir pela via interna simplificada do HU.</dd>
+    <dt>Calculadora Barcelona (Rebeca)</dt><dd>Três implementações: regressão de Crovetto, abordagem de Serra e uma baseada no funcionamento do site. Num conjunto reduzido, os resultados coincidiram com a calculadora oficial. Marcelo propôs validar com a população de Alagoas (quilombolas, ciganas, pretas e pardas) para publicação.</dd>
+    <dt>SIH/SUS em Alagoas (Rebeca)</dt><dd>Internações de 2015 a 2025 lideradas por parto, complicações do trabalho de parto, aborto, pré-eclâmpsia e doenças maternas. Foco em pré-eclâmpsia e diabetes gestacional.</dd>
+    <dt>Organização</dt><dd>Rodrigo vai condensar as apresentações da equipe na página de acompanhamento. Marcelo observou que o volume de material produzido dá segurança ao projeto perante a coordenação geral.</dd>
+  </dl></details>
+  <details><summary>Próximos passos</summary><ul>
+    <li><strong>Rodrigo:</strong> atualizar a página de acompanhamento; incluir os campos opcionais no GESTAR; submeter o projeto de absenteísmo; criar repositório geral no GitHub; planejar tarefas para o Yuk; validar a calculadora com dados do GESTAR junto com a Rebeca.</li>
+    <li><strong>Marcelo:</strong> submeter o projeto ao CEP; registrar o SOFIA e a equipe na Rede de Pesquisa.</li>
+    <li><strong>Caio:</strong> abrir chamado para o ambiente de treinamento do AGHU; criar a tabela de campos e encaminhar à unidade neonatal para validação.</li>
+    <li><strong>Lara:</strong> focar em SINASC e SIM; investigar bases tratadas de outros estudos; compartilhar o repositório.</li>
+    <li><strong>Tarcísio:</strong> apoiar a Lara nas bases abertas.</li>
+    <li><strong>Rebeca:</strong> processar as doenças mais comuns em Alagoas nos últimos 5 anos; trazer estudos recentes sobre pré-eclâmpsia.</li>
+    <li><strong>Todos:</strong> cadastro na Plataforma Brasil (vínculo HU) e na Rede de Pesquisa do HU.</li>
+  </ul></details>
+  <p class="note">Materiais: ver <a href="../acompanhamento/#materiais">Acompanhamento</a>.</p>
+</article>
+
+<article class="meet" id="r0511">
+  <header><span class="date">05/11</span><span class="tag">Online</span><span class="tag">Semana 5</span></header>
+  <p class="sum">Mapeamento das gestantes de alto risco de Rio Largo, lançamento desta wiki, levantamento de bases abertas, navegação no sistema do HU e apresentação da calculadora Barcelona.</p>
+  <details open><summary>O que foi discutido</summary><dl>
+    <dt>Rio Largo (Tarcísio)</dt><dd>71 gestantes de alto risco cadastradas no GESTAR, cruzadas com 10 tabelas principais do PEC. Pré-eclâmpsia e IG em dias não têm campo estruturado; aparecem em texto livre, junto com USG e Doppler.</dd>
+    <dt>Consentimento</dt><dd>Marcelo informou que os TCLEs de gestantes e adolescentes do projeto de telessaúde estão prontos e serão disparados após a aprovação do CEP, viabilizando o uso retroativo.</dd>
+    <dt>Wiki</dt><dd>Rodrigo apresentou esta wiki no GitHub para centralizar objetivos, histórico de reuniões, bases e materiais.</dd>
+    <dt>Bases abertas</dt><dd>Rodrigo sugeriu estudos com bases abertas em paralelo, para contornar a demora do CEP. Lara apresentou o levantamento: SINASC, SIM, CNES, SISAB, SIH, SISVAN e bases internacionais.</dd>
+    <dt>Sistema do HU (Yuk)</dt><dd>Mostrou a navegação no AGHU: difícil filtrar gestantes diretamente; dados estruturados e textos clínicos livres; endereço de acesso mudou. Foi orientado a consultar o Caio e a trabalhar com o Tarcísio em scripts com LLM para estruturar laudos.</dd>
+    <dt>Calculadora Barcelona (Rebeca)</dt><dd>Triagem de pré-eclâmpsia no 1º trimestre com dados epidemiológicos, biométricos e marcadores. Rodrigo sugeriu replicar em Python para entender divergências do site e rotular os dados do GESTAR para ML.</dd>
+  </dl></details>
+  <details><summary>Próximos passos</summary><ul>
+    <li><strong>Tarcísio:</strong> mapear as gestantes restantes de Rio Largo; investigar o campo de desfecho no PEC; mapear variáveis de evasão na contrarreferência.</li>
+    <li><strong>Rebeca:</strong> apresentar as variáveis para predição de doenças a partir da literatura; replicar e documentar a calculadora Barcelona.</li>
+    <li><strong>Lara:</strong> enviar a tabela de cruzamento (regiões, nutrição, indicadores socioeconômicos); avaliar qualidade e atualização das bases.</li>
+    <li><strong>Yuk:</strong> verificar com o Caio a indisponibilidade do sistema; coletar mais prontuários; script para extrair dados de laudos e identificar gestantes.</li>
+    <li><strong>Rodrigo:</strong> repositório no GitHub; documentação da calculadora no Notion; pedir acesso à base de Branquinha.</li>
+  </ul></details>
+</article>
+
+<article class="meet" id="r2910">
+  <header><span class="date">29/10</span><span class="tag">Presencial no HU</span></header>
+  <p class="sum">Reunião presencial com o professor Marcelo. Sem ata no Drive; o que saiu dela alimentou o <a href="../study-design/">study design</a>, incluindo as frentes de trabalho listadas em <a href="../study-design/#decisoes">Decisões</a>.</p>
+</article>
+
+<article class="meet" id="r2210">
+  <header><span class="date">22/10</span><span class="tag">Online</span><span class="tag">Semana 3</span></header>
+  <p class="sum">Os problemas da base GESTAR vieram à tona e o target de evasão passou a ser questionado.</p>
+  <details open><summary>O que foi discutido</summary><dl>
+    <dt>Problemas no dataset (Lara)</dt><dd>129 colunas e só 28 descritas no dicionário. Com o corte de menos de 6 consultas, 1.087 gestantes (96%) contam como evasão, mas muitas estão com menos de 27 semanas e ainda em acompanhamento. Só 26 registros válidos na outra classe. Inconsistências de IDs: 61 cadastros sem gestação, 4 consultas com gestação ausente e 20 divergências.</dd>
+    <dt>Modelagem (Yuk)</dt><dd>XGBoost no GESTAR (1.113 gestantes, 129 atributos, 80/20). Com alvo de 8 consultas, o modelo falhou (AUC 0,50). Com alvo de 6 consultas, AUC 0,93 e precisão 99,5%, mas com 96% na classe positiva a precisão engana. O slide de captação precoce repete as mesmas métricas e precisa ser conferido.</dd>
+    <dt>Ética (Caio)</dt><dd>Pelas regras novas do CEP/CONEP, o TCLE seria obrigatório até para dado anonimizado, o que inviabiliza a análise retrospectiva sem assinatura retroativa de cerca de mil pacientes. Ficou em discussão.</dd>
+    <dt>AGHU</dt><dd>Caio mostrou o ambiente de teste. Anamnese e evolução são texto livre e exigem PLN. A TI deve fornecer views ou exportações em CSV/JSON.</dd>
+    <dt>Ferramentas</dt><dd>Esqueleto do artigo foi para o Prism, para evitar o custo do Overleaf. Rebeca integrada à equipe.</dd>
+  </dl></details>
+  <details><summary>Decisões e próximos passos</summary><ul>
+    <li>Avaliar trocar o alvo para complicação no parto ou cesárea, a validar com o professor Marcelo.</li>
+    <li>Reunião presencial no HU na quinta seguinte (29/10), às 11h.</li>
+    <li><strong>Tarcísio, Lara e Yuk:</strong> corrigir os problemas da base.</li>
+    <li><strong>Rodrigo:</strong> validar o alvo; relatório para a RNP; gravações para o Drive.</li>
+    <li><strong>Caio:</strong> reservar a sala no HU. <strong>Todos:</strong> explorar o AGHU de teste.</li>
+  </ul></details>
+</article>
+
+<article class="meet" id="r1510">
+  <header><span class="date">15/10</span><span class="tag">Online</span><span class="tag">Semana 2</span></header>
+  <p class="sum">Planilha de features organizada e proposta de um primeiro artigo só com dados estruturados do GESTAR.</p>
+  <details open><summary>O que foi discutido</summary><dl>
+    <dt>Features (Rodrigo)</dt><dd>Organizadas em sociodemográficas, acesso, histórico obstétrico, gestação atual, comorbidades, exames e desfechos, marcando o que o GESTAR precisa complementar com o AGHU.</dd>
+    <dt>Literatura (Lara e Tarcísio)</dt><dd>Lara apresentou a matriz de revisão e três APIs públicas para mapear UBS e serviços especializados. Tarcísio apresentou o estudo da Etiópia (2021–2025, 3.855 gestantes, abandono como menos de 8 consultas) e artigos brasileiros sobre óbito evitável.</dd>
+    <dt>Modelo híbrido (Yuk)</dt><dd>XGBoost nos dados tabulares mais BioBERTpt no texto clínico, a partir de Santos et al. (teleconsultoria no SUS, 40.506 registros, Macro F1 0,61).</dd>
+    <dt>Plano de artigos (Rodrigo)</dt><dd>Primeiro artigo só com GESTAR (RF ou Gradient Boosting com SHAP). AGHU numa segunda fase e RNDS numa terceira. BioBERT e LLMs quando houver texto do AGHU.</dd>
+  </dl></details>
+  <details><summary>Próximos passos</summary><ul>
+    <li><strong>Rodrigo:</strong> validar o artigo só com GESTAR com o professor Marcelo; calendário de submissões (SBC/CBIS e periódicos); falar com o Caio sobre o AGHU.</li>
+    <li><strong>Tarcísio:</strong> passar à Lara os dados de CNES, UBS e macrorregiões do projeto SAPS.</li>
+    <li><strong>Todos:</strong> atualizar a planilha de mapeamento.</li>
+  </ul></details>
+</article>
+
+<article class="meet" id="r0810">
+  <header><span class="date">08/10</span><span class="tag">Online</span><span class="tag">Semana 1 · Revisão de artigos</span></header>
+  <p class="sum">Primeira rodada de revisão de literatura. Gradient Boosting e SHAP escolhidos para os primeiros testes; evasão na contrarreferência e pré-eclâmpsia como desfechos prioritários.</p>
+  <details open><summary>O que foi discutido</summary><dl>
+    <dt>Artigos apresentados</dt><dd>Rodrigo: Sidama, Etiópia (XGBoost; início do pré-natal após 16 semanas e residência rural como principais fatores). Lara: Mlandu et al. (DHS de RDC, Quênia e Tanzânia; Random Forest; residência, escolaridade e exposição à mídia). Yuk e Tarcísio: EBM interpretável (Bosschieter 2022, AUROC entre 0,74 e 0,76 para cinco modelos), a plataforma Khushi Baby e um artigo de parto prematuro.</dd>
+    <dt>Fatores de abandono (Caio)</dt><dd>Início tardio, nível socioeconômico, residência rural, escolaridade materna e do parceiro, distância, transporte, multiparidade, mídia e autonomia.</dd>
+    <dt>Pipeline proposto</dt><dd>Boruta e SMOTE, XGBoost/LightGBM/RF, TreeSHAP, imputação MICE, dados de 2021 a 2025, mapeamento HL7 FHIR para o WP6 e alerta acima de 0,70 de score para o WP7.</dd>
+  </dl></details>
+  <details><summary>Próximos passos</summary><ul>
+    <li><strong>Caio:</strong> mapear as features do AGHU (tabela, coluna, estruturada ou não).</li>
+    <li><strong>Rodrigo:</strong> planilha de features dos artigos cruzada com GESTAR e AGHU; acesso do Yuk à homologação do GESTAR; documentar o GESTAR.</li>
+    <li><strong>Tarcísio, Lara e Yuk:</strong> desenho do estudo.</li>
+    <li><strong>Marcelo:</strong> protocolo e TCLE; submeter ao CEP; refazer a apresentação para a coordenação.</li>
+  </ul></details>
+</article>
+
+<article class="meet" id="r3009">
+  <header><span class="date">30/09</span><span class="tag">Presencial</span><span class="tag">Kick-off</span></header>
+  <p class="sum">Início do WP3. A Rede SOFIA reúne UFRN, UFC, UFRJ, UFAL e UFPI, com coordenação na UFRN. São 24 meses, 18 de desenvolvimento.</p>
+  <details open><summary>O que foi discutido</summary><dl>
+    <dt>Objetivo</dt><dd>Prever a probabilidade de gestantes de alto risco se perderem na contrarreferência depois do atendimento no HU, com alerta para o profissional e para a gestante, integrado ao GESTAR.</dd>
+    <dt>Contexto</dt><dd>O projeto ficou parado cerca de 6 meses por questão jurídica; a proposta original está datada e a equipe pode adaptar a metodologia. Séries temporais ou abordagem estrutural fica para depois da revisão de literatura.</dd>
+    <dt>Dados</dt><dd>O GESTAR tem dados pessoais e classificação de risco, mas não evolução clínica, e cobre 8 municípios do interior. No AGHU a evolução é texto livre. O AGHU exige CEP via Plataforma Brasil.</dd>
+    <dt>Infraestrutura</dt><dd>Plano de rodar localmente um modelo open-weight de cerca de 8B parâmetros com fine-tuning, por soberania de dados, com possibilidade de ir depois para a nuvem da RNP.</dd>
+    <dt>Rotina</dt><dd>Reunião semanal às quintas, online, uma presencial por mês, um slide por pessoa por semana e relatório trimestral para a RNP construído semana a semana.</dd>
+  </dl></details>
+  <details><summary>Próximos passos</summary><ul>
+    <li><strong>Rodrigo:</strong> criar o Drive e o Trello.</li>
+    <li><strong>Todos:</strong> trazer um artigo resumido para a próxima reunião.</li>
+    <li><strong>Marcelo, com Caio:</strong> submeter ao CEP para acesso ao AGHU.</li>
+  </ul></details>
+</article>
+
+<p class="note">Fontes: atas e notas automáticas do Meet de 30/09, 08/10, 15/10, 22/10, 05/11 e 12/11, e apresentações da equipe. Assuntos pessoais e administrativos (bolsas, concursos) ficaram de fora. Gravações e transcrições ficam só no Drive.</p>
+</div>
+</body>
+</html>
