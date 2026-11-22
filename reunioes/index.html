@@ -58,28 +58,64 @@ details summary{cursor:pointer;font-weight:600;color:var(--accent)}details[open]
 <div class="wrap">
 <header>
   <span class="crumb"><a href="../">← Wiki do WP3</a></span>
-  <span class="eyebrow">Reuniões · 30/09 a 12/11/2026</span>
+  <span class="eyebrow">Reuniões · 30/09 a 19/11/2026</span>
   <h1>O que a equipe discutiu e decidiu</h1>
   <p class="lead">Reuniões semanais às quintas, online, com uma presencial por mês no HU. Cada pessoa leva um slide por semana. Resumo feito a partir das atas, das notas automáticas do Meet e das apresentações. As notas automáticas erram nomes e falantes; na dúvida, vale a gravação.</p>
   <nav class="toc" aria-label="Reuniões">
-    <a href="#r1211">12/11</a><a href="#r0511">05/11</a><a href="#r2910">29/10</a><a href="#r2210">22/10</a><a href="#r1510">15/10</a><a href="#r0810">08/10</a><a href="#r3009">30/09</a><a href="#linha">Como as decisões evoluíram</a>
+    <a href="#r1911">19/11</a><a href="#r1211">12/11</a><a href="#r0511">05/11</a><a href="#r2910">29/10</a><a href="#r2210">22/10</a><a href="#r1510">15/10</a><a href="#r0810">08/10</a><a href="#r3009">30/09</a><a href="#linha">Como as decisões evoluíram</a>
   </nav>
 </header>
 
 <section id="linha">
   <h2>Como as decisões evoluíram</h2>
   <div class="tw"><table>
-    <thead><tr><th>Tema</th><th>Antes</th><th>Agora (12/11)</th></tr></thead>
+    <thead><tr><th>Tema</th><th>Antes</th><th>Agora (19/11)</th></tr></thead>
     <tbody>
       <tr><td>Target do primeiro estudo</td><td>Evasão do pré-natal (&lt; 6 ou &lt; 8 consultas) com dados do GESTAR (08/10 e 15/10)</td><td>Em aberto. A evasão por contagem está contaminada por censura e só 26 gestantes ficam na classe sem evasão. Alternativas: desfechos de parto, risco dinâmico ou sobrevivência com censura.</td></tr>
-      <tr><td>Fontes de dados</td><td>GESTAR primeiro, AGHU depois, RNDS por último (15/10)</td><td>PEC pausado e AGHU bloqueado até o CEP. Bases abertas (SINASC e SIM) em paralelo.</td></tr>
-      <tr><td>Ética</td><td>Submeter ao CEP para o AGHU (30/09); TCLE exigido até para dado anonimizado (22/10)</td><td>Autorização específica para o GESTAR; primeira submissão só com dados estruturados; texto livre por emenda.</td></tr>
+      <tr><td>Fontes de dados</td><td>GESTAR primeiro, AGHU depois, RNDS por último (15/10)</td><td>PEC pausado e AGHU fora do ar até o CEP. Duas frentes em paralelo: SINASC atualizado (2024–2025) e revisão sistemática.</td></tr>
+      <tr><td>Ética</td><td>Submeter ao CEP para o AGHU (30/09); TCLE exigido até para dado anonimizado (22/10)</td><td>Autorização específica para o GESTAR, só dados estruturados, texto livre por emenda. CEP leva cerca de 2 meses; Caio pré-valida. Segundo projeto, sem CEP, com dados administrativos do HU.</td></tr>
       <tr><td>Doenças gestacionais</td><td>Pré-eclâmpsia como desfecho prioritário (08/10)</td><td>Calculadora Barcelona replicada; escopo (só PE ou todos os hipertensivos) adiado.</td></tr>
       <tr><td>Variáveis da literatura</td><td>81 de 95 no GESTAR (planilha de features)</td><td>70 em GESTAR e PEC, 19 só no PEC, 3 só no GESTAR, 3 em nenhum.</td></tr>
-      <tr><td>Escrita</td><td>Overleaf, depois Prism por custo (22/10)</td><td>Volta ao Overleaf.</td></tr>
+      <tr><td>Uso de nº de consultas</td><td>Preditor no XGBoost do GESTAR (22/10)</td><td>Excluído dos modelos: compõe o próprio desfecho (GESTAR e SINASC).</td></tr>
+      <tr><td>Escrita</td><td>Overleaf, depois Prism por custo (22/10)</td><td>Volta ao Overleaf. Organização no GitHub com repositórios por subprojeto.</td></tr>
     </tbody>
   </table></div>
 </section>
+
+<article class="meet" id="r1911">
+  <header><span class="date">19/11</span><span class="tag">Online</span><span class="tag">Semana 7</span></header>
+  <p class="sum">Com o projeto travado à espera do CEP, a equipe se dividiu em duas frentes: revisão sistemática e estudos exploratórios com bases abertas. Análise exploratória do SINASC, mapeamento do AGHU e um segundo projeto de pesquisa sem CEP.</p>
+  <div class="cols">
+    <div><h3>Decidido</h3><ul class="dec">
+      <li>Duas frentes até a aprovação do CEP: revisão sistemática (Rodrigo e Yuk) e estudos com bases abertas (Tarcísio e Lara). Resultados das duas vão ao professor Marcelo na semana seguinte.</li>
+      <li>Segundo projeto de pesquisa, sem CEP, com dados administrativos não identificados do HU (absenteísmo, município, clima).</li>
+      <li>Quantidade de consultas fora dos modelos preditivos, para evitar sobreajuste.</li>
+      <li>Organização no GitHub com repositórios por subprojeto: wiki, artigos e estudos.</li>
+      <li>Rebeca segue num artigo separado sobre pré-eclâmpsia com a calculadora Barcelona.</li>
+    </ul></div>
+    <div><h3>Em aberto</h3><ul class="open">
+      <li>Como prever evasão com o SINASC, se o número de consultas já compõe a métrica de inadequação.</li>
+      <li>Óbito neonatal, óbito fetal, UTI neonatal e UTI materna: confirmar se são estruturados no AGHU.</li>
+      <li>Escopo de pré-eclâmpsia, que vinha de 12/11 (Rebeca não esteve presente).</li>
+    </ul></div>
+  </div>
+  <details><summary>O que foi discutido</summary><dl>
+    <dt>Situação geral</dt><dd>Rodrigo e Tarcísio apontaram que o SOFIA está travado à espera do CEP. Rodrigo sugeriu um artigo de revisão sistemática para avançar, reconhecendo que esse tipo de estudo perdeu valor acadêmico com o uso de IA. Tarcísio propôs análises com bases abertas em paralelo. As apresentações anteriores foram compiladas nesta wiki para a reunião do professor Marcelo com a RNP.</dd>
+    <dt>SINASC em Alagoas (Lara)</dt><dd>Cerca de 600 mil registros de 2012 a 2023. 2019 é o ano com mais dados faltantes (16%). O pré-natal inadequado caiu de 29% (2014) para 15% (2023), e o adequado (7 ou mais consultas, início até o 3º mês) subiu de 43% para 70%. Inadequação maior em nascimentos com menos de 28 semanas ou baixo peso, em mães com menos de 15 anos (30%), no interior em relação a Maceió e entre pretas e pardas.</dd>
+    <dt>Limite do SINASC para predição</dt><dd>A inadequação é calculada pelo mês de início e pela quantidade de consultas. Por isso a quantidade de consultas sai dos modelos. O SINASC não tem identificador para cruzar com hospitais; a comparação com HU, Metropolitano e Santa Mônica precisa ser macro.</dd>
+    <dt>Atualização dos dados</dt><dd>Rodrigo sugeriu incluir os anos mais recentes disponíveis no DataSUS, contornando os dicionários desatualizados que atrapalharam a Lara. Caio faz ponte com o ambulatório do HU para extrair dados e comparar com pacientes de alta complexidade.</dd>
+    <dt>Mapeamento do AGHU (Caio)</dt><dd>Com o sistema fora do ar, Caio apresentou o mapeamento. Estruturados ou calculáveis: idade materna, faixa etária, escolaridade (indireta), cor, profissão e distância calculada por CEP de residência. Em texto livre de anamnese e evolução: evasão do pré-natal, paridade e óbito fetal.</dd>
+    <dt>Extração de texto clínico</dt><dd>Caio propôs expressões regulares para dados determinísticos, que facilitam a aprovação no CEP, além de LLM local. Rodrigo sugeriu entrevistar obstetras do HU para entender os padrões de escrita e construir regex mais precisas.</dd>
+    <dt>CEP</dt><dd>O trâmite leva em média dois meses, com reuniões quinzenais que exigem submissão prévia e ajustes. Caio é membro do CEP e vai pré-validar os documentos para evitar retrabalho.</dd>
+    <dt>GitHub e Overleaf</dt><dd>Rodrigo criou a organização e os repositórios no GitHub para materiais e escrita no Overleaf, e pediu os usuários de todos.</dd>
+  </dl></details>
+  <details><summary>Próximos passos</summary><ul>
+    <li><strong>Tarcísio e Lara:</strong> atualizar o SINASC com 2024 e 2025; estudos exploratórios sem a variável de quantidade de consultas.</li>
+    <li><strong>Rodrigo e Yuk:</strong> estruturar e conduzir a <a href="../acompanhamento/#revisao">revisão sistemática</a>.</li>
+    <li><strong>Rodrigo:</strong> redigir o projeto sem CEP e enviar à equipe; montar o Overleaf da revisão; incluir todos na organização do GitHub; alinhar com o professor Marcelo o calendário do CEP.</li>
+    <li><strong>Caio:</strong> previsão de retorno do AGHU; seguir com o CEP e pedir a pré-validação; atualizar o mapeamento de variáveis do AGHU; coletar com médicos os padrões de preenchimento dos prontuários; revisar a minuta do projeto sem CEP; enviar o usuário do GitHub.</li>
+  </ul></details>
+</article>
 
 <article class="meet" id="r1211">
   <header><span class="date">12/11</span><span class="tag">Online</span><span class="tag">Semana 6</span></header>
@@ -217,7 +253,7 @@ details summary{cursor:pointer;font-weight:600;color:var(--accent)}details[open]
   </ul></details>
 </article>
 
-<p class="note">Fontes: atas e notas automáticas do Meet de 30/09, 08/10, 15/10, 22/10, 05/11 e 12/11, e apresentações da equipe. Assuntos pessoais e administrativos (bolsas, concursos) ficaram de fora. Gravações e transcrições ficam só no Drive.</p>
+<p class="note">Fontes: atas e notas automáticas do Meet de 30/09, 08/10, 15/10, 22/10, 05/11, 12/11 e 19/11, e apresentações da equipe. Assuntos pessoais e administrativos (bolsas, concursos) ficaram de fora. Gravações e transcrições ficam só no Drive.</p>
 </div>
 </body>
 </html>
